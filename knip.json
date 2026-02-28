@@ -7,7 +7,8 @@
     "app/**/*.{ts,tsx}",
     "components/**/*.{ts,tsx}",
     "hooks/**/*.ts",
-    "lib/**/*.ts"
+    "lib/**/*.ts",
+    "!lib/__tests__/server-only-mock.ts"
   ],
   "ignoreDependencies": [
     "tailwindcss"

@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import { WidgetSkeleton } from './widget-skeleton';
 import type { ReactNode } from 'react';

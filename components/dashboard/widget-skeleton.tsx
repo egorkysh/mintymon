@@ -1,7 +1,4 @@
-'use client';
-
 import { cn } from '@/lib/utils';
-import { useMemo } from 'react';
 
 interface WidgetSkeletonProps {
   className?: string;
@@ -11,7 +8,7 @@ interface WidgetSkeletonProps {
 const LINE_WIDTHS = ['75%', '85%', '65%', '90%', '70%', '80%', '60%', '88%'];
 
 export function WidgetSkeleton({ className, lines = 3 }: WidgetSkeletonProps) {
-  const extraLines = useMemo(() => Math.max(0, lines - 2), [lines]);
+  const extraLines = Math.max(0, lines - 2);
 
   return (
     <div

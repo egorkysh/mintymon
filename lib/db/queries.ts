@@ -1,3 +1,4 @@
+import 'server-only';
 import { db } from './index';
 import {
   providerCache,
