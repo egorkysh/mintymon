@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4 Configuration ── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Mintymon Dashboard Theme ── */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Surface tokens */
+  --color-bg: var(--mn-bg);
+  --color-surface: var(--mn-surface);
+  --color-surface-raised: var(--mn-surface-raised);
+  --color-border: var(--mn-border);
+  --color-border-subtle: var(--mn-border-subtle);
+
+  /* Text tokens */
+  --color-text-primary: var(--mn-text);
+  --color-text-secondary: var(--mn-text-secondary);
+  --color-text-tertiary: var(--mn-text-tertiary);
+
+  /* Status colors */
+  --color-healthy: var(--mn-healthy);
+  --color-healthy-bg: var(--mn-healthy-bg);
+  --color-warning: var(--mn-warning);
+  --color-warning-bg: var(--mn-warning-bg);
+  --color-critical: var(--mn-critical);
+  --color-critical-bg: var(--mn-critical-bg);
+  --color-info: var(--mn-info);
+  --color-info-bg: var(--mn-info-bg);
+
+  /* Accent */
+  --color-accent: var(--mn-accent);
+  --color-accent-bg: var(--mn-accent-bg);
+
+  /* Chart palette */
+  --color-chart-1: var(--mn-chart-1);
+  --color-chart-2: var(--mn-chart-2);
+  --color-chart-3: var(--mn-chart-3);
+  --color-chart-4: var(--mn-chart-4);
+  --color-chart-5: var(--mn-chart-5);
+
+  /* Sidebar */
+  --color-sidebar-bg: var(--mn-sidebar-bg);
+  --color-sidebar-border: var(--mn-sidebar-border);
+  --color-sidebar-active: var(--mn-sidebar-active);
+
+  /* Font families */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Dark Mode (default for monitoring) ── */
+:root {
+  --background: #0a0a0f;
+  --foreground: #e2e8f0;
+
+  --mn-bg: #0a0a0f;
+  --mn-surface: #111118;
+  --mn-surface-raised: #1a1a24;
+  --mn-border: #1e1e2e;
+  --mn-border-subtle: #16161f;
+
+  --mn-text: #e2e8f0;
+  --mn-text-secondary: #94a3b8;
+  --mn-text-tertiary: #64748b;
+
+  --mn-healthy: #34d399;
+  --mn-healthy-bg: rgba(52, 211, 153, 0.1);
+  --mn-warning: #fbbf24;
+  --mn-warning-bg: rgba(251, 191, 36, 0.1);
+  --mn-critical: #f87171;
+  --mn-critical-bg: rgba(248, 113, 113, 0.1);
+  --mn-info: #60a5fa;
+  --mn-info-bg: rgba(96, 165, 250, 0.1);
+
+  --mn-accent: #818cf8;
+  --mn-accent-bg: rgba(129, 140, 248, 0.1);
+
+  --mn-chart-1: #60a5fa;
+  --mn-chart-2: #34d399;
+  --mn-chart-3: #fbbf24;
+  --mn-chart-4: #a78bfa;
+  --mn-chart-5: #fb923c;
+
+  --mn-sidebar-bg: #08080d;
+  --mn-sidebar-border: #1e1e2e;
+  --mn-sidebar-active: rgba(129, 140, 248, 0.1);
+}
+
+/* ── Light Mode ── */
+.light {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+
+  --mn-bg: #f8fafc;
+  --mn-surface: #ffffff;
+  --mn-surface-raised: #f1f5f9;
+  --mn-border: #e2e8f0;
+  --mn-border-subtle: #f1f5f9;
+
+  --mn-text: #0f172a;
+  --mn-text-secondary: #475569;
+  --mn-text-tertiary: #94a3b8;
+
+  --mn-healthy: #059669;
+  --mn-healthy-bg: rgba(5, 150, 105, 0.08);
+  --mn-warning: #d97706;
+  --mn-warning-bg: rgba(217, 119, 6, 0.08);
+  --mn-critical: #dc2626;
+  --mn-critical-bg: rgba(220, 38, 38, 0.08);
+  --mn-info: #2563eb;
+  --mn-info-bg: rgba(37, 99, 235, 0.08);
+
+  --mn-accent: #6366f1;
+  --mn-accent-bg: rgba(99, 102, 241, 0.08);
+
+  --mn-chart-1: #3b82f6;
+  --mn-chart-2: #10b981;
+  --mn-chart-3: #f59e0b;
+  --mn-chart-4: #8b5cf6;
+  --mn-chart-5: #f97316;
+
+  --mn-sidebar-bg: #ffffff;
+  --mn-sidebar-border: #e2e8f0;
+  --mn-sidebar-active: rgba(99, 102, 241, 0.08);
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mn-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mn-text-tertiary);
+}
+
+/* ── Status Pulse Animation ── */
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-status-pulse {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* ── Fade-in for staggered card reveals ── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s ease-out both;
+}
+
+/* ── Ambient glow for status-colored cards ── */
+.glow-healthy {
+  box-shadow: 0 0 20px -6px rgba(52, 211, 153, 0.15),
+              inset 0 1px 0 0 rgba(52, 211, 153, 0.06);
+}
+
+.glow-warning {
+  box-shadow: 0 0 20px -6px rgba(251, 191, 36, 0.15),
+              inset 0 1px 0 0 rgba(251, 191, 36, 0.06);
+}
+
+.glow-critical {
+  box-shadow: 0 0 20px -6px rgba(248, 113, 113, 0.2),
+              inset 0 1px 0 0 rgba(248, 113, 113, 0.06);
+}
+
+/* ── Noise texture overlay ── */
+.noise-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
