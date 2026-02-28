@@ -7,6 +7,7 @@ import {
 } from '@/components/providers/time-range-provider';
 import { LogOut, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { ThemeToggle } from './theme-toggle';
 
 const presets: { value: TimeRangePreset; label: string }[] = [
   { value: '1h', label: '1H' },
@@ -70,6 +71,9 @@ export function Header({ title }: HeaderProps) {
             Live
           </span>
         </div>
+
+        {/* Theme toggle */}
+        <ThemeToggle />
 
         {/* Logout */}
         <button

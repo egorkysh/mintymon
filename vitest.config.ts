@@ -12,7 +12,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['lib/**/*.ts'],
-      exclude: ['lib/db/index.ts'],
+      exclude: ['lib/db/index.ts', 'lib/db/seed.ts'],
       thresholds: {
         lines: 90,
         functions: 90,

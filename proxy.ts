@@ -13,7 +13,7 @@ function getJwtVersion(): string {
   return process.env.JWT_VERSION ?? '1';
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip auth check for login page, auth APIs, and static assets
