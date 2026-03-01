@@ -175,9 +175,9 @@ export default function AlertsPage() {
       </PageHeader>
 
       {showForm && (
-        <form onSubmit={handleCreateSubmit} className="rounded-lg border border-border bg-surface p-5 mb-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <input name="name" placeholder="Alert name" required className="col-span-2 px-3 py-2 rounded-md border border-border bg-bg text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent/40" />
-          <input name="metricKey" placeholder="Metric key" required className="col-span-2 px-3 py-2 rounded-md border border-border bg-bg text-sm text-text-primary font-mono placeholder:text-text-tertiary focus:outline-none focus:border-accent/40" />
+        <form onSubmit={handleCreateSubmit} className="rounded-lg border border-border bg-surface p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <input name="name" placeholder="Alert name" required className="sm:col-span-2 px-3 py-2 rounded-md border border-border bg-bg text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent/40" />
+          <input name="metricKey" placeholder="Metric key" required className="sm:col-span-2 px-3 py-2 rounded-md border border-border bg-bg text-sm text-text-primary font-mono placeholder:text-text-tertiary focus:outline-none focus:border-accent/40" />
           <select name="condition" className="px-3 py-2 rounded-md border border-border bg-bg text-sm text-text-primary focus:outline-none focus:border-accent/40">
             <option value="gt">Greater than</option>
             <option value="lt">Less than</option>

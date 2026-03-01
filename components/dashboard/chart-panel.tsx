@@ -34,7 +34,7 @@ export function ChartPanel({
         className,
       )}
     >
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border-subtle">
+      <div className="flex items-center justify-between px-4 md:px-5 py-4 border-b border-border-subtle">
         <div>
           <h3 className="text-sm font-medium text-text-primary">{title}</h3>
           {subtitle && (
@@ -43,7 +43,7 @@ export function ChartPanel({
         </div>
         {headerRight}
       </div>
-      <div className="p-5">
+      <div className="p-4 md:p-5">
         {isEmpty ? (
           <div className="flex items-center justify-center h-40 text-sm text-text-tertiary">
             {emptyMessage}

@@ -39,7 +39,7 @@ export function DataTable<T>({
                 <th
                   key={col.key}
                   className={cn(
-                    'px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-text-tertiary',
+                    'px-3 md:px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-text-tertiary',
                     col.className,
                   )}
                 >
@@ -65,7 +65,7 @@ export function DataTable<T>({
                   className="transition-colors hover:bg-surface-raised/50"
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className={cn('px-4 py-3', col.className)}>
+                    <td key={col.key} className={cn('px-3 md:px-4 py-3', col.className)}>
                       {col.render(row)}
                     </td>
                   ))}

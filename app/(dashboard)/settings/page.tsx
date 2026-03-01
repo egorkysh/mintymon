@@ -63,7 +63,7 @@ export default function SettingsPage() {
               <div key={p.id} className="flex items-center justify-between px-5 py-4">
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-medium text-text-primary">{p.name}</span>
-                  <span className="text-[11px] font-mono text-text-tertiary">{p.id}</span>
+                  <span className="text-[11px] font-mono text-text-tertiary hidden sm:inline">{p.id}</span>
                 </div>
                 <StatusBadge
                   status={p.hasData ? 'healthy' : 'unknown'}
@@ -84,7 +84,7 @@ export default function SettingsPage() {
           </div>
           <div className="divide-y divide-border-subtle">
             {(Object.keys(pollingLabels) as PollingKey[]).map((key) => (
-              <div key={key} className="flex items-center justify-between px-5 py-4">
+              <div key={key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-4">
                 <span className="text-sm text-text-primary">{pollingLabels[key]}</span>
                 <div className="flex items-center gap-1 rounded-lg border border-border bg-bg p-0.5">
                   {intervalOptions.map((opt) => (

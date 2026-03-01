@@ -5,9 +5,10 @@ import {
   useTimeRange,
   type TimeRangePreset,
 } from '@/components/providers/time-range-provider';
-import { LogOut, Clock } from 'lucide-react';
+import { LogOut, Clock, Menu } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle';
 import { authClient } from '@/lib/auth-client';
+import { useSidebar } from '@/components/providers/sidebar-provider';
 
 const presets: { value: TimeRangePreset; label: string }[] = [
   { value: '1h', label: '1H' },
@@ -23,6 +24,7 @@ interface HeaderProps {
 
 export function Header({ title }: HeaderProps) {
   const { preset, setPreset } = useTimeRange();
+  const { isMobile, setMobileOpen } = useSidebar();
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -30,8 +32,16 @@ export function Header({ title }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between h-14 px-6 border-b border-border bg-bg/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-30 flex items-center justify-between h-14 px-4 md:px-6 border-b border-border bg-bg/80 backdrop-blur-sm">
       <div className="flex items-center gap-3">
+        {isMobile && (
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 -ml-2 rounded-md text-text-tertiary hover:text-text-secondary hover:bg-surface-raised transition-colors md:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        )}
         {title && (
           <h1 className="text-sm font-semibold text-text-primary tracking-tight">
             {title}
@@ -39,16 +49,16 @@ export function Header({ title }: HeaderProps) {
         )}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         {/* Time range selector */}
         <div className="flex items-center gap-1 rounded-lg border border-border bg-surface p-0.5">
-          <Clock className="h-3.5 w-3.5 text-text-tertiary ml-2 mr-1" />
+          <Clock className="h-3.5 w-3.5 text-text-tertiary ml-2 mr-1 hidden sm:block" />
           {presets.map((p) => (
             <button
               key={p.value}
               onClick={() => setPreset(p.value)}
               className={cn(
-                'px-2.5 py-1 text-[11px] font-semibold tracking-wide rounded-md',
+                'px-1.5 md:px-2.5 py-1 text-[11px] font-semibold tracking-wide rounded-md',
                 'transition-all duration-150',
                 preset === p.value
                   ? 'bg-accent-bg text-accent'
@@ -66,7 +76,7 @@ export function Header({ title }: HeaderProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-healthy opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-healthy" />
           </span>
-          <span className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
+          <span className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider hidden sm:inline">
             Live
           </span>
         </div>

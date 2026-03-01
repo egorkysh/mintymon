@@ -57,7 +57,7 @@ export function MetricCard({
   return (
     <div
       className={cn(
-        'relative rounded-lg border border-border bg-surface p-5',
+        'relative rounded-lg border border-border bg-surface p-4 md:p-5',
         'transition-all duration-300',
         'hover:border-border-subtle hover:bg-surface/80',
         glowClass[status],

@@ -10,7 +10,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description, children, className }: PageHeaderProps) {
   return (
-    <div className={cn('flex items-center justify-between mb-6', className)}>
+    <div className={cn('flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6', className)}>
       <div>
         <h2 className="text-lg font-semibold text-text-primary tracking-tight">
           {title}
@@ -19,7 +19,7 @@ export function PageHeader({ title, description, children, className }: PageHead
           <p className="text-sm text-text-tertiary mt-0.5">{description}</p>
         )}
       </div>
-      {children && <div className="flex items-center gap-2">{children}</div>}
+      {children && <div className="flex items-center gap-2 self-start sm:self-auto">{children}</div>}
     </div>
   );
 }

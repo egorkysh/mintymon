@@ -5,6 +5,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { Header } from '@/components/layout/header';
 import { QueryProvider } from '@/components/providers/query-provider';
 import { TimeRangeProvider } from '@/components/providers/time-range-provider';
+import { SidebarProvider } from '@/components/providers/sidebar-provider';
 
 export default async function DashboardLayout({
   children,
@@ -22,16 +23,18 @@ export default async function DashboardLayout({
   return (
     <QueryProvider>
       <TimeRangeProvider>
-        <div className="flex min-h-screen noise-bg">
-          <Sidebar />
-          {/* Main content area — offset by sidebar width via CSS */}
-          <div className="flex-1 ml-16 xl:ml-56 transition-all duration-300">
-            <Header />
-            <main className="relative z-10 p-6">
-              {children}
-            </main>
+        <SidebarProvider>
+          <div className="flex min-h-screen noise-bg overflow-x-hidden">
+            <Sidebar />
+            {/* Main content area — offset by sidebar width via CSS */}
+            <div className="flex-1 min-w-0 ml-0 md:ml-16 xl:ml-56 transition-all duration-300">
+              <Header />
+              <main className="relative z-10 p-4 md:p-6">
+                {children}
+              </main>
+            </div>
           </div>
-        </div>
+        </SidebarProvider>
       </TimeRangeProvider>
     </QueryProvider>
   );
