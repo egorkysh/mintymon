@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Monitor, ArrowRight, Loader2 } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 
-export default function LoginPage() {
+export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -38,7 +38,7 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message ?? 'Authentication failed');
       } else {
-        router.push('/');
+        router.refresh();
       }
     } catch {
       setError('Connection error');

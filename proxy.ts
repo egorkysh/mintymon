@@ -5,9 +5,9 @@ import { auth } from '@/lib/auth';
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip auth for login page, auth APIs, cron routes, and static assets
+  // Skip auth for root page (layout handles auth gate), auth APIs, cron routes, and static assets
   if (
-    pathname === '/login' ||
+    pathname === '/' ||
     pathname.startsWith('/api/auth/') ||
     pathname.startsWith('/api/cron/') ||
     pathname.startsWith('/_next/') ||
@@ -31,7 +31,7 @@ export async function proxy(request: NextRequest) {
   });
 
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
@@ -39,6 +39,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!login|api/auth|api/cron|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api/auth|api/cron|_next/static|_next/image|favicon.ico).*)',
   ],
 };
