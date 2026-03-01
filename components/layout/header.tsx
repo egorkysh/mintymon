@@ -8,6 +8,7 @@ import {
 import { LogOut, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
+import { authClient } from '@/lib/auth-client';
 
 const presets: { value: TimeRangePreset; label: string }[] = [
   { value: '1h', label: '1H' },
@@ -26,7 +27,7 @@ export function Header({ title }: HeaderProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    await authClient.signOut();
     router.push('/login');
   };
 

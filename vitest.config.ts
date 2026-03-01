@@ -13,7 +13,13 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['lib/**/*.ts'],
-      exclude: ['lib/db/index.ts', 'lib/db/seed.ts'],
+      exclude: [
+        'lib/db/index.ts',
+        'lib/db/seed.ts',
+        'lib/db/seed-admin.ts',
+        'lib/db/auth-schema.ts',
+        'lib/auth-client.ts',
+      ],
       thresholds: {
         lines: 90,
         functions: 90,

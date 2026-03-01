@@ -1,22 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { jwtVerify } from 'jose';
-
-const COOKIE_NAME = 'mintymon-session';
-
-function getSecret() {
-  const secret = process.env.ADMIN_SESSION_SECRET;
-  if (!secret) throw new Error('ADMIN_SESSION_SECRET is not set');
-  return new TextEncoder().encode(secret);
-}
-
-function getJwtVersion(): string {
-  return process.env.JWT_VERSION ?? '1';
-}
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip auth check for login page, auth APIs, and static assets
+  // Skip auth for login page, auth APIs, cron routes, and static assets
   if (
     pathname === '/login' ||
     pathname.startsWith('/api/auth/') ||
@@ -27,7 +16,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Verify Origin header on mutating requests (CSRF defense-in-depth)
+  // CSRF origin check on mutating requests (defense-in-depth for non-auth routes)
   if (['POST', 'PATCH', 'DELETE', 'PUT'].includes(request.method)) {
     const origin = request.headers.get('origin');
     const url = new URL(request.url);
@@ -36,19 +25,12 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  const token = request.cookies.get(COOKIE_NAME)?.value;
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
+  // Validate session via Better Auth (database-backed)
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  try {
-    const { payload } = await jwtVerify(token, getSecret(), {
-      algorithms: ['HS256'],
-    });
-    if (payload.sub !== 'admin' || payload.jwtVersion !== getJwtVersion()) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-  } catch {
+  if (!session) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
@@ -57,14 +39,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all paths except:
-     * - /login
-     * - /api/auth/*
-     * - /api/cron/*
-     * - /_next/static, /_next/image
-     * - /favicon.ico
-     */
     '/((?!login|api/auth|api/cron|_next/static|_next/image|favicon.ico).*)',
   ],
 };

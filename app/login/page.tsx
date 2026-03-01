@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Monitor, ArrowRight, Loader2 } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,17 +18,27 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+      const result = await authClient.signIn.email({
+        email,
+        password,
+        fetchOptions: {
+          onError: (ctx) => {
+            if (ctx.response.status === 429) {
+              const retryAfter = ctx.response.headers.get('X-Retry-After');
+              setError(
+                retryAfter
+                  ? `Too many attempts. Try again in ${retryAfter}s.`
+                  : 'Too many attempts. Try again later.',
+              );
+            }
+          },
+        },
       });
 
-      if (res.ok) {
-        router.push('/');
+      if (result.error) {
+        setError(result.error.message ?? 'Authentication failed');
       } else {
-        const data = await res.json();
-        setError(data.error || 'Authentication failed');
+        router.push('/');
       }
     } catch {
       setError('Connection error');
@@ -59,17 +71,25 @@ export default function LoginPage() {
         </div>
 
         {/* Login form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              autoFocus
-              className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-all font-mono"
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            autoFocus
+            autoComplete="username"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-all"
+          />
+
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            autoComplete="current-password"
+            className="w-full px-4 py-3 rounded-lg border border-border bg-surface text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-all font-mono"
+          />
 
           {error && (
             <p className="text-xs text-critical font-medium px-1">{error}</p>
@@ -77,7 +97,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={loading || !password}
+            disabled={loading || !email || !password}
             className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-accent text-sm font-semibold text-bg transition-all hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {loading ? (

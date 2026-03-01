@@ -1,0 +1,15 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - heading "mintymon" [level=1] [ref=e9]
+      - paragraph [ref=e10]: monitoring dashboard
+    - generic [ref=e11]:
+      - textbox "Enter password" [active] [ref=e13]
+      - button "Authenticate" [disabled] [ref=e14]:
+        - text: Authenticate
+        - img [ref=e15]
+    - paragraph [ref=e17]: Authorized personnel only
+  - button "Open Next.js Dev Tools" [ref=e23] [cursor=pointer]:
+    - img [ref=e24]
+  - alert [ref=e27]
