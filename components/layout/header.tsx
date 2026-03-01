@@ -6,7 +6,6 @@ import {
   type TimeRangePreset,
 } from '@/components/providers/time-range-provider';
 import { LogOut, Clock } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
 import { authClient } from '@/lib/auth-client';
 
@@ -24,11 +23,10 @@ interface HeaderProps {
 
 export function Header({ title }: HeaderProps) {
   const { preset, setPreset } = useTimeRange();
-  const router = useRouter();
 
   const handleLogout = async () => {
     await authClient.signOut();
-    router.push('/');
+    window.location.href = '/';
   };
 
   return (
